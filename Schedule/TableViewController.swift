@@ -2,7 +2,7 @@
 //  TableViewController.swift
 //  Schedule
 //
-//  Created by Alexey on 18.02.2019.
+//  Created by Alexey on 22.02.2019.
 //  Copyright © 2019 AO. All rights reserved.
 //
 
@@ -12,9 +12,13 @@ class TableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
 
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-    
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -24,59 +28,76 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return Subjects.count
+        return Subjects.count;
     }
+
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let currentItem = Subjects[indexPath.row]
-        cell.textLabel?.text = currentItem["Name"] as! String
+        let currentSubject = Subjects[indexPath.row]
+        var ans = ((currentSubject["Name"] as? String)!) + " in " + ((currentSubject["Classroom"] as? String)!)
+        cell.textLabel?.text = ans
         
-        return cell;
+        // Configure the cell...
+
+        return cell
     }
-   
+    
+
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    */
+
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            //removeSubject(at: [indexPath])
             removeSubject(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
+        }    
     }
-    @IBAction func pushAddAction(_ sender: Any) {
-        let alertController = UIAlertController(title: "Add new subject", message: "", preferredStyle: .alert)
-        alertController.addTextField { (textField) in
-            textField.placeholder = "Enter subject"
-        }
-        alertController.addTextField { (textField) in
-            textField.placeholder = "Enter classroom"
-        }
-        
-        alertController.addTextField { (textField) in
-            textField.placeholder = "Enter time"
-        }
-        
-        let alertAction1 = UIAlertAction(title: "Cancel", style: .default) { (alert) in
-            
-        }
-        
-        
-        let alertAction2 = UIAlertAction(title: "Create", style: .default) { (alert) in
-            //add new element
-            let newSubject = alertController.textFields![0].text
-            let classRoom = alertController.textFields![1].text
-            let time = alertController.textFields![2].text
-            addSubject(nameSubject: newSubject!, classRoom: classRoom!, time: time!)
-            self.tableView.reloadData()
-        }
-        
-        alertController.addAction(alertAction1)
-        alertController.addAction(alertAction2)
-        present(alertController, animated: true, completion: nil)
+
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+
     }
+    */
+
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    */
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
     @IBAction func addButtonPress(_ sender: Any) {
+        print("ButtonPressed")
         let newVC = storyboard?.instantiateViewController(withIdentifier: "addSubjectVC")
         present(newVC!, animated: true, completion: nil)
+    }
+    
+    func reloadTableView(){
+        tableView.reloadData()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }

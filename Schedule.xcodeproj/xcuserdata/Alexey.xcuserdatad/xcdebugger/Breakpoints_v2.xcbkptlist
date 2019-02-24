@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Schedule/TableViewController.swift"
-            timestampString = "572343500.527596"
+            filePath = "../../Test1/time/time/ViewController.swift"
+            timestampString = "572613871.526225"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "numberOfSections(in:)"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "doneButtonPress(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

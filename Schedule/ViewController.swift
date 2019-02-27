@@ -63,7 +63,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let minutesSelected = minutes[pickerView.selectedRow(inComponent: 2)]
         
         timeText.text =  "\(daySelected) at \(hoursSelected) : \(minutesSelected) "
-        day = row
+        day = pickerView.selectedRow(inComponent: 0)
         h = hoursSelected
         m = minutesSelected
     }
@@ -80,8 +80,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     @IBAction func doneButtonPress(_ sender: Any) {
+        print("Ahtung")
+        print(day)
+        print(h)
+        print(m)
         addSubject(name: inputSubjectField.text as! String, class1: inputClassroom.text as! String, day:day, h:h, m:m)
-        print(Subjects)
         let newVC = storyboard?.instantiateViewController(withIdentifier: "NVC")
         present(newVC!, animated: true, completion: nil)
     }

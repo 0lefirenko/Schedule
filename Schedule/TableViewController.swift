@@ -12,12 +12,33 @@ class TableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        var nextIndex : Int = 0
+        var date = Date()
+        let calendar = Calendar.current
+        var currMin = (calendar.component(.weekday, from: date)-2)*1440+calendar.component(.hour, from: date)*60+calendar.component(.minute, from: date)
+        print("Current:" + String(currMin))
+        for i in 0...(Subjectc.count-1){
+            let minn : Int = (Subjectc[i].Day)*1440 + Subjectc[i].Hour*60 + Subjectc[i].Minute
+            if (currMin - 40 < minn) {
+                nextIndex = i
+                break
+            }
+        }
+        print(nextIndex)
+        if (nextIndex == -1) {nextIndex = 0}
+        nextIndex = nextIndex % Subjectc.count
+        var ans = ""
+       if (Subjectc.count > 0){ ans = ((Subjectc[nextIndex].Name as? String)!) + " in " + ((Subjectc[nextIndex].Classroom as? String)!) + " at " + String(Subjectc[nextIndex].Hour) + ":" + String(Subjectc[nextIndex].Minute)
+        }
+        UserDefaults.init(suiteName: "group.com.scheduleproject")?.setValue(ans, forKey: "name")
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
 
     // MARK: - Table view data source
 
@@ -28,15 +49,15 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return Subjects.count;
+        return Subjectc.count;
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let currentSubject = Subjects[indexPath.row]
-        var ans = ((currentSubject["Name"] as? String)!) + " in " + ((currentSubject["Classroom"] as? String)!)
-        cell.textLabel?.text = ans
+        let currentSubject = Subjectc[indexPath.row]
+        let ans1 = ((currentSubject.Name as? String)!) + " in " + ((currentSubject.Classroom as? String)!)
+        cell.textLabel?.text = ans1
         
         // Configure the cell...
 
@@ -88,7 +109,6 @@ class TableViewController: UITableViewController {
     }
     */
     @IBAction func addButtonPress(_ sender: Any) {
-        print("ButtonPressed")
         let newVC = storyboard?.instantiateViewController(withIdentifier: "addSubjectVC")
         present(newVC!, animated: true, completion: nil)
     }

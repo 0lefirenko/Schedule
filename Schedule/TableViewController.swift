@@ -17,16 +17,18 @@ class TableViewController: UITableViewController {
         let calendar = Calendar.current
         var currMin = (calendar.component(.weekday, from: date)-2)*1440+calendar.component(.hour, from: date)*60+calendar.component(.minute, from: date)
         print("Current:" + String(currMin))
-        for i in 0...(Subjectc.count-1){
+if (Subjectc.count>0)
+{        for i in 0...(Subjectc.count-1){
             let minn : Int = (Subjectc[i].Day)*1440 + Subjectc[i].Hour*60 + Subjectc[i].Minute
             if (currMin - 40 < minn) {
                 nextIndex = i
                 break
             }
         }
+}
         print(nextIndex)
         if (nextIndex == -1) {nextIndex = 0}
-        nextIndex = nextIndex % Subjectc.count
+if (Subjectc.count>0)       { nextIndex = nextIndex % Subjectc.count}
         var ans = ""
        if (Subjectc.count > 0){ ans = ((Subjectc[nextIndex].Name as? String)!) + " in " + ((Subjectc[nextIndex].Classroom as? String)!) + " at " + String(Subjectc[nextIndex].Hour) + ":" + String(Subjectc[nextIndex].Minute)
         }
